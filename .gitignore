@@ -1,0 +1,55 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+.envrc
+.npmrc
+.pypirc
+.netrc
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+
+# Node.js and Next.js
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python and test output
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+.pytest_cache/
+pytest-cache-files-*/
+.mypy_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+coverage/
+playwright-report/
+test-results/
+
+# Local runtime, tooling, and OS files
+.cache/
+*.log
+*.pid
+*.sqlite*
+dump.rdb
+*.sql.gz
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
