@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 export const invoiceStatuses = ["Awaiting approval", "Due soon", "Simulated paid"] as const;
 export type InvoiceStatus = (typeof invoiceStatuses)[number];
 
@@ -33,7 +35,14 @@ type Catalog = {
 };
 
 async function fetchRecords<Resource extends keyof Catalog>(resource: Resource): Promise<Catalog[Resource][]> {
+  let cookie = "";
+  try {
+    cookie = (await cookies()).toString();
+  } catch {
+    // Unit rendering outside a Next request has no browser session context.
+  }
   const response = await fetch(`http://127.0.0.1:8000/${resource}`, {
+    headers: { cookie },
     cache: "no-store",
     redirect: "error",
     signal: AbortSignal.timeout(2500),

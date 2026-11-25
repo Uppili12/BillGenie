@@ -12,7 +12,7 @@
 
 @layer components {
   .sidebar {
-    @apply border-b border-slate-800 bg-slate-950 px-4 py-5 text-white sm:px-6 lg:border-r lg:border-b-0 lg:py-8;
+    @apply border-b border-slate-800 bg-slate-950 px-4 py-5 text-white sm:px-6 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:border-r lg:border-b-0 lg:py-8;
   }
 
   .brand-mark {
@@ -21,6 +21,10 @@
 
   .nav-link {
     @apply block rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-link { @apply transition-colors duration-150; }
   }
 
   .nav-link[aria-current="page"] {
@@ -58,5 +62,17 @@
 
   .status-label {
     @apply inline-block rounded-full px-2.5 py-1 font-medium;
+  }
+
+  .field-control {
+    @apply block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 shadow-sm;
+  }
+
+  .button-primary {
+    @apply rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700 disabled:cursor-wait disabled:opacity-60;
+  }
+
+  .button-secondary {
+    @apply rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 disabled:cursor-wait disabled:opacity-60;
   }
 }

@@ -3,14 +3,19 @@ import asyncio
 from httpx import ASGITransport, AsyncClient
 
 from app.main import app
+from app.authz import Principal, current_principal
+from app.models import User
 
 
 async def read_catalog():
+    user = User(id="test-user", idp_subject="test-subject", email="test@example.invalid", email_verified=True)
+    app.dependency_overrides[current_principal] = lambda: Principal(user=user, roles=frozenset({"CEO"}), permissions=frozenset({"financial:read"}))
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://testserver") as client:
         paths = ("/vendors", "/subscriptions", "/invoices")
         responses = await asyncio.gather(*(client.get(path) for path in paths))
         for response in responses:
             response.raise_for_status()
+        app.dependency_overrides.clear()
         return tuple(response.json() for response in responses)
 
 

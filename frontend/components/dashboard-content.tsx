@@ -2,14 +2,14 @@ import type { ReactNode } from "react";
 import type { InvoiceRow } from "../lib/catalog";
 import { formatAmount, formatDueDate } from "../lib/format";
 
-export function DashboardHeading({ title, description }: { title: string; description: string }) {
+export function DashboardHeading({ title, description, dataLabel = "Mock data" }: { title: string; description: string; dataLabel?: string }) {
   return (
     <header className="mb-7 flex flex-wrap items-start justify-between gap-3">
       <div>
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
         <p className="mt-2 text-slate-600">{description}</p>
       </div>
-      <span className="demo-label">Mock data</span>
+      <span className="demo-label">{dataLabel}</span>
     </header>
   );
 }

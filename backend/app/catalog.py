@@ -1,8 +1,12 @@
 from datetime import date
 from typing import Literal
 
-from fastapi import APIRouter
+from typing import Annotated
+
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
+
+from .authz import FinancialReader
 
 
 class Vendor(BaseModel, frozen=True):
@@ -53,15 +57,15 @@ router = APIRouter()
 
 
 @router.get("/vendors")
-def list_vendors() -> tuple[Vendor, ...]:
+def list_vendors(_: FinancialReader) -> tuple[Vendor, ...]:
     return VENDORS
 
 
 @router.get("/subscriptions")
-def list_subscriptions() -> tuple[Subscription, ...]:
+def list_subscriptions(_: FinancialReader) -> tuple[Subscription, ...]:
     return SUBSCRIPTIONS
 
 
 @router.get("/invoices")
-def list_invoices() -> tuple[Invoice, ...]:
+def list_invoices(_: FinancialReader) -> tuple[Invoice, ...]:
     return INVOICES

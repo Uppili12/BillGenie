@@ -28,6 +28,22 @@ services:
       timeout: 3s
       retries: 10
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.5
+    command: ["start-dev", "--import-realm", "--features=recovery-codes"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_BOOTSTRAP_ADMIN_USERNAME:-kc-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_BOOTSTRAP_ADMIN_PASSWORD:?Set a local Keycloak admin password in .env}
+      KC_HOSTNAME: http://localhost:8080
+      KC_HOSTNAME_STRICT: "false"
+      KC_HEALTH_ENABLED: "true"
+    ports:
+      - "127.0.0.1:${KEYCLOAK_PORT:-8080}:8080"
+    volumes:
+      - ./identity/realm:/opt/keycloak/data/import:ro
+      - keycloak_data:/opt/keycloak/data
+
 volumes:
   postgres_data:
   redis_data:
+  keycloak_data:

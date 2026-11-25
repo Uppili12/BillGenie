@@ -29,13 +29,13 @@ function mockCatalog(t: TestContext) {
   });
 }
 
-test("dashboard links cover all seven sections and identify the current page", () => {
+test("dashboard links cover all thirteen sections and identify the current page", () => {
   const html = renderToStaticMarkup(<DashboardLinks pathname="/approvals" />);
   const paths = [...html.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
 
-  assert.deepEqual(paths, ["/", "/subscriptions", "/invoices", "/approvals", "/payments", "/reports", "/settings"]);
-  assert.deepEqual(paths.slice(1), generateStaticParams().map(({ section }) => `/${section}`));
-  assert.match(html, /<a(?=[^>]*aria-current="page")(?=[^>]*href="\/approvals")[^>]*>Approvals<\/a>/);
+  assert.deepEqual(paths, ["/", "/subscriptions", "/vendors", "/invoices", "/approvals", "/transactions", "/notifications", "/reports", "/audit-logs", "/security-centre", "/user-management", "/account", "/settings"]);
+  assert.deepEqual(paths.slice(1).filter((path) => path !== "/account"), generateStaticParams().map(({ section }) => `/${section}`));
+  assert.match(html, /<a(?=[^>]*aria-current="page")(?=[^>]*href="\/approvals")[^>]*>Payment Approvals<\/a>/);
   assert.equal(html.match(/aria-current="page"/g)?.length, 1);
 });
 
